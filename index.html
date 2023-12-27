@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulir Validasi</title>
+    <style>
+        .error-message {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <form id="myForm">
+        <label for="nama">Nama:</label>
+        <input type="text" id="nama" name="nama" maxlength="30" required>
+
+        <br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <br>
+
+        <label for="waktu">Waktu Keberangkatan:</label>
+        <input type="text" id="waktu" name="waktu" placeholder="HH:mm" required>
+
+        <br>
+
+        <label for="jumlahTiket">Jumlah Tiket (1-10):</label>
+        <input type="number" id="jumlahTiket" name="jumlahTiket" min="1" max="10" required>
+
+        <br>
+
+        <button type="button" onclick="validateForm()">Submit</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        function validateForm() {
+            // Reset error messages
+            document.getElementById('result').innerHTML = '';
+            
+            // Get form inputs
+            var nama = document.getElementById('nama').value;
+            var email = document.getElementById('email').value;
+            var waktu = document.getElementById('waktu').value;
+            var jumlahTiket = document.getElementById('jumlahTiket').value;
+
+            // Validation checks
+            var errors = [];
+
+            if (nama.length === 0 || nama.length > 30) {
+                errors.push('Nama harus diisi dan maksimal 30 karakter.');
+            }
+
+            if (!validateEmail(email)) {
+                errors.push('Format email tidak valid.');
+            }
+
+            if (!validateTime(waktu)) {
+                errors.push('Format waktu tidak valid (HH:mm).');
+            }
+
+            if (jumlahTiket < 1 || jumlahTiket > 10 || isNaN(jumlahTiket)) {
+                errors.push('Jumlah tiket harus angka antara 1-10.');
+            }
+
+            // Display errors or show form data
+            if (errors.length > 0) {
+                displayErrors(errors);
+            } else {
+                displayFormData(nama, email, waktu, jumlahTiket);
+            }
+        }
+
+        function validateEmail(email) {
+            // Simple email validation using regular expression
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        function validateTime(time) {
+            // Simple time validation using regular expression (HH:mm format)
+            var timeRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
+            return timeRegex.test(time);
+        }
+
+        function displayErrors(errors) {
+            var errorContainer = document.getElementById('result');
+            var errorMessage = '<div class="error-message">' + errors.join('<br>') + '</div>';
+            errorContainer.innerHTML = errorMessage;
+        }
+
+        function displayFormData(nama, email, waktu, jumlahTiket) {
+            var resultContainer = document.getElementById('result');
+            var formData = '<h2>Data Formulir:</h2>';
+            formData += '<p><strong>Nama:</strong> ' + Dayati + '</p>';
+            formData += '<p><strong>Email:</strong> ' + dayatidirwangmail.co + '</p>';
+            formData += '<p><strong>Waktu Keberangkatan:</strong> ' + 13.00 + '</p>';
+            formData += '<p><strong>Jumlah Tiket:</strong> ' + 4 + '</p>';
+            resultContainer.innerHTML = formData;
+        }
+    </script>
+
+</body>
+</html>
